@@ -1,0 +1,15 @@
+version: '2.7.17'
+networks:
+  pribas_network:
+    driver: bridge
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: serkan
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27018:27018"
+    networks:
+      - pribas_network

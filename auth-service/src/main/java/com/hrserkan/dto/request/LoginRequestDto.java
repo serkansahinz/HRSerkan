@@ -1,2 +1,15 @@
-package com.hrserkan.dto.request;public class LoginRequestDto {
+package com.hrserkan.dto.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class LoginRequestDto {
+    private String username;
+    private String password;
 }

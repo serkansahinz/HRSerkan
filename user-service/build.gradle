@@ -1,5 +1,6 @@
 dependencies{
-
-    implementation libs.springBootDataMongo
+    implementation libs.postgresql
+    implementation libs.springBootJpa
+//    implementation libs.springBootDataMongo
 
 }
