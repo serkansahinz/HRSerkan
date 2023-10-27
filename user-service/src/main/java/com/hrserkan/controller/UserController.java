@@ -1,0 +1,42 @@
+package com.hrserkan.controller;
+
+
+import com.hrserkan.dto.request.UserProfileUpdateRequestDto;
+import com.hrserkan.dto.request.UserSaveRequestDto;
+import com.hrserkan.repository.entity.UserProfile;
+import com.hrserkan.service.UserService;
+import com.hrserkan.utility.JwtTokenManager;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+import javax.validation.Valid;
+
+import static com.hrserkan.constant.EndPoints.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(USER)
+
+public class UserController {
+
+    private final UserService userService;
+    private final JwtTokenManager jwtTokenManager;
+
+    @PostMapping(SAVE)
+    public ResponseEntity<Boolean> save(@RequestBody UserSaveRequestDto userSaveRequestDto){
+        return ResponseEntity.ok(userService.createNewUser(userSaveRequestDto));
+    }
+
+    @PostMapping(ACTIVATE_STATUS)
+    public ResponseEntity<String> activateStatus(@RequestParam String token){
+        return ResponseEntity.ok(userService.activateStatus(token));
+    }
+    @PutMapping(UPDATE)
+    public ResponseEntity<String> updateUserProfile(@Valid @RequestBody UserProfileUpdateRequestDto userProfileUpdateRequestDto){
+        return ResponseEntity.ok(userService.updateUserProfile(userProfileUpdateRequestDto));
+    }
+
+}

@@ -4,6 +4,7 @@ import com.hrserkan.dto.request.ActivateRequestDto;
 import com.hrserkan.dto.request.LoginRequestDto;
 import com.hrserkan.dto.request.RegisterRequestDto;
 import com.hrserkan.dto.response.RegisterResponseDto;
+import com.hrserkan.manager.IUserManager;
 import com.hrserkan.repository.entity.Auth;
 import com.hrserkan.service.AuthService;
 import com.hrserkan.utility.JwtTokenManager;
@@ -24,6 +25,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtTokenManager jwtTokenManager;
+
 
     @GetMapping(FIND_ALL)
     public ResponseEntity<List<Auth>> findAll(){
@@ -50,4 +52,5 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody @Valid ActivateRequestDto activateRequestDto){
         return ResponseEntity.ok(authService.activateStatus(activateRequestDto));
     }
+    //update yazılacak
 }

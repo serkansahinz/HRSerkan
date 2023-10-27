@@ -6,6 +6,7 @@ import com.hrserkan.dto.request.RegisterRequestDto;
 import com.hrserkan.dto.response.RegisterResponseDto;
 import com.hrserkan.exception.AuthManagerException;
 import com.hrserkan.exception.ErrorType;
+import com.hrserkan.manager.IUserManager;
 import com.hrserkan.mapper.IAuthMapper;
 import com.hrserkan.repository.IAuthRepository;
 import com.hrserkan.repository.entity.Auth;
@@ -15,6 +16,7 @@ import com.hrserkan.utility.JwtTokenManager;
 import com.hrserkan.utility.ServiceManager;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,23 +25,30 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
+    private final IUserManager userManager;
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager) {
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IUserManager userManager) {
         super(authRepository);
         this.authRepository=authRepository;
         this.jwtTokenManager = jwtTokenManager;
+        this.userManager = userManager;
     }
 
-    public RegisterResponseDto register(RegisterRequestDto dto){
-        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
+    @Transactional
+    public RegisterResponseDto register(RegisterRequestDto registerRequestDto){
+        Auth auth = IAuthMapper.INSTANCE.toAuth(registerRequestDto);
         auth.setActivationCode(CodeGenerator.generateCode());
-        if(authRepository.existsByUsername(dto.getUsername())){
+        if(authRepository.existsByUsername(registerRequestDto.getUsername())){
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }
         save(auth);
-        RegisterResponseDto registerResponseDto= IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+
+
        String token=jwtTokenManager.createToken(auth.getId()).
                 orElseThrow(()-> new AuthManagerException(ErrorType.INVALID_TOKEN));
+
+        userManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth), "Bearer " + token);
+        RegisterResponseDto registerResponseDto= IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
 
         registerResponseDto.setToken(token);
         return registerResponseDto;
@@ -58,7 +67,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
                     orElseThrow(()-> new AuthManagerException(ErrorType.INVALID_TOKEN));
 
     }
-
+    @Transactional
     public String activateStatus(ActivateRequestDto activateRequestDto){
         Optional<Long> id=jwtTokenManager.getIdFromToken(activateRequestDto.getToken());
         if(id.isEmpty()){
@@ -75,6 +84,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         if (activateRequestDto.getActivationCode().equals(optionalAuth.get().getActivationCode())){
             optionalAuth.get().setStatus(EStatus.ACTIVE);
             update(optionalAuth.get());
+            userManager.activateStatus(activateRequestDto.getToken());
         return "Account has been activated";
         } else{
             throw new AuthManagerException(ErrorType.INVALID_CODE);

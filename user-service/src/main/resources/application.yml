@@ -9,7 +9,7 @@
 #      password: root
 #      database: hrDB oluşturulacak mongodbde
 server:
-  port: 6070
+  port: 6062
 spring:
   datasource:
     username: postgres
@@ -19,4 +19,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+jwt:
+  secretKey: ${aaessecretkey}
+  issuer: ${aaesissuer}
