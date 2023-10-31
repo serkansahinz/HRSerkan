@@ -1,6 +1,7 @@
 package com.hrserkan.controller;
 
 import com.hrserkan.dto.request.ActivateRequestDto;
+import com.hrserkan.dto.request.AuthUpdateRequestDto;
 import com.hrserkan.dto.request.LoginRequestDto;
 import com.hrserkan.dto.request.RegisterRequestDto;
 import com.hrserkan.dto.response.RegisterResponseDto;
@@ -44,6 +45,10 @@ public class AuthController {
     public ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid RegisterRequestDto registerRequestDto){
         return ResponseEntity.ok(authService.register(registerRequestDto));
     }
+//    @PostMapping(REGISTER+"_with_rabbitmq")
+//    public ResponseEntity<RegisterResponseDto> registerWithRabbitMq(@RequestBody @Valid RegisterRequestDto registerRequestDto){
+//        return ResponseEntity.ok(authService.registerWithRabbitMq(registerRequestDto));
+//    }
     @PostMapping(LOGIN)
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto){
         return ResponseEntity.ok(authService.login(loginRequestDto));
@@ -53,4 +58,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.activateStatus(activateRequestDto));
     }
     //update yazılacak
+    @PutMapping(UPDATE)
+    public ResponseEntity<String> updateAuth(@RequestBody AuthUpdateRequestDto authUpdateRequestDto , @RequestHeader("Authorization")String token){
+        return ResponseEntity.ok(authService.updateAuth(authUpdateRequestDto));
+    }
 }

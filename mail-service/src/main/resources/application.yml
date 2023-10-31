@@ -1,0 +1,21 @@
+server:
+  port: 6075
+spring:
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: socialmedia
+#    password: root
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${serkan_mail} # serkanheynaber@gmail.com
+    password: ${serkan_mail_password}  # sugu edhf sssc yiak
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+#rabbitmq:
+#  mail-queue: queue-mail

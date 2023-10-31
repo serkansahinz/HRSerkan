@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 
 
 //import com.hrserkan.rabbitmq.model.MailModel;
-//import com.hrserkan.rabbitmq.model.RegisterModel;
+
 
 
 
@@ -25,10 +25,9 @@ public interface IAuthMapper {
     @Mapping(source = "id", target = "authId")
     UserSaveRequestDto toUserSaveRequestDto(Auth auth);
 
-
-//    @Mapping(source = "id",target = "authId")
+//    @Mapping(source = "id", target = "authId")
 //    RegisterModel toRegisterModel(Auth auth);
-//
+
 //    MailModel toMailModel(Auth auth);
 
 

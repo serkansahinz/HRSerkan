@@ -33,15 +33,25 @@ public class UserService extends ServiceManager<UserProfile, Long> {
     }
 
     public Boolean createNewUser(UserSaveRequestDto userSaveRequestDto) {
-        UserProfile userProfile = null;
+
         try {
-            userProfile = IUserMapper.INSTANCE.toUserProfile(userSaveRequestDto);
+            UserProfile userProfile = IUserMapper.INSTANCE.toUserProfile(userSaveRequestDto);
             save(userProfile);
             return true;
         } catch (Exception e) {
             throw new UserManagerException(ErrorType.USER_NOT_CREATED);
         }
     }
+//    public Boolean createNewUserWithRabbitmq(RegisterModel registerModel) {
+//
+//        try {
+//            UserProfile userProfile = IUserMapper.INSTANCE.toUserProfile(registerModel);
+//            save(userProfile);
+//            return true;
+//        } catch (Exception e) {
+//            throw new UserManagerException(ErrorType.USER_NOT_CREATED);
+//        }
+//    }
 
     public String activateStatus(String token) {
         Optional<Long> authId = jwtTokenManager.getAuthIdFromToken(token);//authtan gelen token bu register ile geldi
@@ -89,4 +99,6 @@ public class UserService extends ServiceManager<UserProfile, Long> {
         return "Account has been updated";
 
     }
+
+
 }

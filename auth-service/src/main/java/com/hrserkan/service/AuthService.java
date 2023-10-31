@@ -1,6 +1,7 @@
 package com.hrserkan.service;
 
 import com.hrserkan.dto.request.ActivateRequestDto;
+import com.hrserkan.dto.request.AuthUpdateRequestDto;
 import com.hrserkan.dto.request.LoginRequestDto;
 import com.hrserkan.dto.request.RegisterRequestDto;
 import com.hrserkan.dto.response.RegisterResponseDto;
@@ -25,13 +26,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
-    private final IUserManager userManager;
+    private final IUserManager userManager;//open feign için
+//    private final RegisterProducer registerProducer;//rabbit için
 
     public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IUserManager userManager) {
         super(authRepository);
         this.authRepository=authRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.userManager = userManager;
+
     }
 
     @Transactional
@@ -53,6 +56,26 @@ public class AuthService extends ServiceManager<Auth, Long> {
         registerResponseDto.setToken(token);
         return registerResponseDto;
     }
+//    @Transactional
+//    public RegisterResponseDto registerWithRabbitMq(RegisterRequestDto registerRequestDto){
+//        Auth auth = IAuthMapper.INSTANCE.toAuth(registerRequestDto);
+//        auth.setActivationCode(CodeGenerator.generateCode());
+//        if(authRepository.existsByUsername(registerRequestDto.getUsername())){
+//            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
+//        }
+//        save(auth);
+//        //rabbit mq ile haberleştirme
+//
+//        registerProducer.sendNewUser(IAuthMapper.INSTANCE.toRegisterModel(auth));
+//
+//        RegisterResponseDto registerResponseDto= IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+//
+//        //register sonrası tokenı oluşturma
+//        String token=jwtTokenManager.createToken(auth.getId()).
+//                orElseThrow(()-> new AuthManagerException(ErrorType.INVALID_TOKEN));
+//        registerResponseDto.setToken(token);
+//        return registerResponseDto;
+//    }
 
     public String login(LoginRequestDto loginRequestDto){
         Optional<Auth> optionalAuth=authRepository.findOptionalByUsernameAndPassword(loginRequestDto.getUsername(), loginRequestDto.getPassword());
@@ -89,6 +112,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
         } else{
             throw new AuthManagerException(ErrorType.INVALID_CODE);
         }
-
+    }
+    public String updateAuth(AuthUpdateRequestDto authUpdateRequestDto) {
+        Optional<Auth> auth = findById(authUpdateRequestDto.getId());
+        if (auth.isEmpty()) {
+            throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
+        }
+        auth.get().setEmail(authUpdateRequestDto.getEmail());
+        auth.get().setUsername(authUpdateRequestDto.getUsername());
+        update(auth.get());
+        return "Successfully updated";
     }
 }

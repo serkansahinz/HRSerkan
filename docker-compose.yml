@@ -12,4 +12,15 @@ services:
     ports:
       - "27018:27018"
     networks:
-      - pribas_network
+      - HRSerkan_network
+#  rabbitmq:
+#    image: rabbitmq:3-management
+#    container_name: java_10_rabbitmq
+#    environment:
+#      - RABBITMQ_DEFAULT_USER=java10
+#      - RABBITMQ_DEFAULT_PASS=123
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    networks:
+##      - HRSerkan_network

@@ -1,0 +1,15 @@
+server:
+  port: 6062
+spring:
+  datasource:
+    username: postgres
+    password: 123456789
+    url: jdbc:postgresql://localhost:5432/hrUserDB
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+jwt:
+  secretKey: ${serkansecretkey}
+  issuer: ${serkanissuer}

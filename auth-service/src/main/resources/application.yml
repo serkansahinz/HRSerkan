@@ -1,15 +1,8 @@
-server:
-  port: 6060
 spring:
-  datasource:
-    username: postgres
-    password: 123456789
-    url: jdbc:postgresql://localhost:5432/hrDB
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-jwt:
-  secretKey: ${aaessecretkey}
-  issuer: ${aaesissuer}
+  cloud:
+    config:
+      uri: ${config-server-url}
+  config:
+    import: "configserver:"
+  application:
+    name: auth-service-application

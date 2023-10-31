@@ -1,0 +1,14 @@
+server:
+  port: 6669
+spring:
+  application:
+    name: config-server-git
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${HRSerkan-uri}
+          default-label: main
+          skip-ssl-validation: true
+          username: ${HRSerkan-username}
+          password: ${HRSerkan-password}

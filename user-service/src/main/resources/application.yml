@@ -1,25 +1,8 @@
-#server:
-#  port: 6070
-#spring:
-#  data:
-#    mongodb:
-#      host: localhost
-#      port: 27017
-#      username: serkan
-#      password: root
-#      database: hrDB oluşturulacak mongodbde
-server:
-  port: 6062
 spring:
-  datasource:
-    username: postgres
-    password: 123456789
-    url: jdbc:postgresql://localhost:5432/hrUserDB
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-jwt:
-  secretKey: ${aaessecretkey}
-  issuer: ${aaesissuer}
+  cloud:
+    config:
+      uri: ${config-server-url}
+  config:
+    import: "configserver:"
+  application:
+    name: user-service-application
