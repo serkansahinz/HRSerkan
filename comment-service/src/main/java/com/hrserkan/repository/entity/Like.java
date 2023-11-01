@@ -5,24 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Entity
+@Document
 public class Like extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String userId;
     private String commentId;
     private String username;
     private String userAvatar;
-    private String content;
+
 }

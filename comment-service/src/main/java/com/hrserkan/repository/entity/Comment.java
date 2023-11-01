@@ -1,33 +1,27 @@
 package com.hrserkan.repository.entity;
 
-import com.hrserkan.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
-import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Entity
+@Document
 public class Comment extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userId;//yorumu kim yaptı
     private String username;
     private String avatar;
-    private String content;
-    @ElementCollection
-    private List<String> mediaUrls;
-    @ElementCollection
-    private List<String>likes;
+    private String comment;//yapılan yorum
+    private List<String> subCommentId; //commentId
+    private List<String> commentLikes; //userId
     //birden fazla yorum nasıl yapılabilir
 
 
