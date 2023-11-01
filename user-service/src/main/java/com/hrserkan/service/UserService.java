@@ -7,6 +7,7 @@ import com.hrserkan.exception.ErrorType;
 import com.hrserkan.exception.UserManagerException;
 import com.hrserkan.manager.IAuthManager;
 import com.hrserkan.mapper.IUserMapper;
+import com.hrserkan.rabbitmq.model.RegisterModel;
 import com.hrserkan.repository.IUserRepository;
 import com.hrserkan.repository.entity.UserProfile;
 import com.hrserkan.repository.enums.EStatus;
@@ -42,16 +43,16 @@ public class UserService extends ServiceManager<UserProfile, Long> {
             throw new UserManagerException(ErrorType.USER_NOT_CREATED);
         }
     }
-//    public Boolean createNewUserWithRabbitmq(RegisterModel registerModel) {
-//
-//        try {
-//            UserProfile userProfile = IUserMapper.INSTANCE.toUserProfile(registerModel);
-//            save(userProfile);
-//            return true;
-//        } catch (Exception e) {
-//            throw new UserManagerException(ErrorType.USER_NOT_CREATED);
-//        }
-//    }
+    public Boolean createNewUserWithRabbitmq(RegisterModel registerModel) {
+
+        try {
+            UserProfile userProfile = IUserMapper.INSTANCE.toUserProfile(registerModel);
+            save(userProfile);
+            return true;
+        } catch (Exception e) {
+            throw new UserManagerException(ErrorType.USER_NOT_CREATED);
+        }
+    }
 
     public String activateStatus(String token) {
         Optional<Long> authId = jwtTokenManager.getAuthIdFromToken(token);//authtan gelen token bu register ile geldi

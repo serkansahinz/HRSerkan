@@ -1,16 +1,14 @@
 package com.hrserkan.mapper;
 
 
-import com.hrserkan.dto.request.UserProfileUpdateRequestDto;
-import com.hrserkan.dto.request.UserSaveRequestDto;
 import com.hrserkan.repository.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "string", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface IUserMapper {
-    IUserMapper INSTANCE= Mappers.getMapper(IUserMapper.class);
+public interface ICommentMapper {
+    ICommentMapper INSTANCE= Mappers.getMapper(ICommentMapper.class);
     Comment toUserProfile(UserSaveRequestDto userSaveRequestDto);
 
     Comment toUserProfile(UserProfileUpdateRequestDto userProfileUpdateRequestDto);

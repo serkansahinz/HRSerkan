@@ -3,15 +3,15 @@ package com.hrserkan.exception;
 import lombok.Getter;
 
 @Getter
-public class UserManagerException extends RuntimeException {
+public class CommentManagerException extends RuntimeException {
 
     private final ErrorType errorType;
 
-    public UserManagerException(ErrorType errorType) {
+    public CommentManagerException(ErrorType errorType) {
         super(errorType.getMessage());
         this.errorType = errorType;
     }
-    public UserManagerException(ErrorType errorType, String customMessage){
+    public CommentManagerException(ErrorType errorType, String customMessage){
         super(customMessage);
         this.errorType=errorType;
     }

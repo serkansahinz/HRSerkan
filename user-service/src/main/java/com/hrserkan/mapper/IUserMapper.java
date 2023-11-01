@@ -3,6 +3,7 @@ package com.hrserkan.mapper;
 
 import com.hrserkan.dto.request.UserProfileUpdateRequestDto;
 import com.hrserkan.dto.request.UserSaveRequestDto;
+import com.hrserkan.rabbitmq.model.RegisterModel;
 import com.hrserkan.repository.entity.UserProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -15,7 +16,7 @@ public interface IUserMapper {
 
     UserProfile toUserProfile(UserProfileUpdateRequestDto userProfileUpdateRequestDto);
 
-//    UserProfile toUserProfile(RegisterModel registerModel);
+    UserProfile toUserProfile(RegisterModel registerModel);
 
 //
 //    // @Mapping( source = "id",target = "userProfileId")

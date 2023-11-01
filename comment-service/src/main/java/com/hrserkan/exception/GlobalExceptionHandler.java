@@ -1,7 +1,6 @@
 package com.hrserkan.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -21,8 +20,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>( createError(ErrorType.UNEXPECTED_ERROR,ex, ex.getMessage()),HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserManagerException.class)
-    public ResponseEntity<ErrorMessage> handleManagerException(UserManagerException exception){
+    @ExceptionHandler(CommentManagerException.class)
+    public ResponseEntity<ErrorMessage> handleManagerException(CommentManagerException exception){
         ErrorType errorType = exception.getErrorType();
         HttpStatus httpStatus = errorType.getHttpStatus();
         ErrorMessage errorMessage=createError(errorType,exception);

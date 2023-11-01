@@ -1,11 +1,11 @@
 package com.hrserkan.repository;
 
 import com.hrserkan.repository.entity.Comment;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface IUserRepository extends JpaRepository<Comment, Long> {
+public interface ICommentRepository extends MongoRepository<Comment, Long> {
 
     Boolean existsByUsername(String username);
 
