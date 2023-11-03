@@ -45,10 +45,10 @@ public class AuthController {
     public ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid RegisterRequestDto registerRequestDto){
         return ResponseEntity.ok(authService.register(registerRequestDto));
     }
-//    @PostMapping(REGISTER+"_with_rabbitmq")
-//    public ResponseEntity<RegisterResponseDto> registerWithRabbitMq(@RequestBody @Valid RegisterRequestDto registerRequestDto){
-//        return ResponseEntity.ok(authService.registerWithRabbitMq(registerRequestDto));
-//    }
+    @PostMapping(REGISTER+"_with_rabbitmq")
+    public ResponseEntity<RegisterResponseDto> registerWithRabbitMq(@RequestBody @Valid RegisterRequestDto registerRequestDto){
+        return ResponseEntity.ok(authService.registerWithRabbitMq(registerRequestDto));
+    }
     @PostMapping(LOGIN)
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto){
         return ResponseEntity.ok(authService.login(loginRequestDto));
